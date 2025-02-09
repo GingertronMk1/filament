@@ -14,26 +14,26 @@ class PositionSeeder extends Seeder
     public function run(): void
     {
         $directions = ['Left', 'Right'];
-        $positions = [
-            'Wing' => 'Standing on the far %POSITION% side of the field, the %POSITION% Wing waits for the ball and uses their speed to score',
-            'Link' => 'Standing one in from the %POSITION% Wing, the %POSITION% Link often goes into the 9 position and delivers the ball either to a mid or a wing in set plays',
-            'Mid' => 'Standing in the middle of the field, the %POSITION% Mid\'s job is to cart the ball in and get a quick rollball. With the other Mid they are used in 2- and 3-person drives frequently'
-        ];
 
         $reverse = false;
 
         foreach ($directions as $key => $direction) {
-            $directionPositions = $positions;
+            $positions = [
+                'Wing' => "Standing on the far {$direction} side of the field, the {$direction} Wing waits for the ball and uses their speed to score",
+                'Link' => "Standing one in from the {$direction} Wing, the {$direction} Link often goes into the 9 position and delivers the ball either to a mid or a wing in set plays",
+                'Mid' => "Standing in the middle of the field, the {$direction} Mid's job is to cart the ball in and get a quick rollball. With the other Mid they are used in 2- and 3-person drives frequently"
+            ];
+
             if ($reverse) {
-                $directionPositions = array_reverse($directionPositions);
+                $positions = array_reverse($positions);
             }
 
             $n = 1;
-            foreach ($directionPositions as $positionName => $description) {
+            foreach ($positions as $positionName => $description) {
                 Position::create([
                     'name' => "{$direction} {$positionName}",
-                    'description' => str_replace('%POSITION%', $direction, $description),
-                    'number' => ($key * count($directionPositions)) + $n,
+                    'description' => $description,
+                    'number' => ($key * count($positions)) + $n,
                 ]);
                 $n++;
             }
