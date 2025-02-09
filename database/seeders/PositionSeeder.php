@@ -15,8 +15,6 @@ class PositionSeeder extends Seeder
     {
         $directions = ['Left', 'Right'];
 
-        $reverse = false;
-
         foreach ($directions as $key => $direction) {
             $positions = [
                 'Wing' => "Standing on the far {$direction} side of the field, the {$direction} Wing waits for the ball and uses their speed to score",
@@ -24,7 +22,7 @@ class PositionSeeder extends Seeder
                 'Mid' => "Standing in the middle of the field, the {$direction} Mid's job is to cart the ball in and get a quick rollball. With the other Mid they are used in 2- and 3-person drives frequently"
             ];
 
-            if ($reverse) {
+            if (!$key % 2) {
                 $positions = array_reverse($positions);
             }
 
@@ -37,8 +35,6 @@ class PositionSeeder extends Seeder
                 ]);
                 $n++;
             }
-
-            $reverse = !$reverse;
         }
     }
 }
