@@ -15,9 +15,18 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        $adminEmail = 'admin@filament.local';
+
+        if (!app()->isProduction() && !User::where('email', $adminEmail)->exists()) {
+            User::create([
+                'name' => 'admin',
+                'email' => $adminEmail,
+                'password' => 'filament'
+            ]);
+        }
+
+        $this->call([
+            PositionSeeder::class,
         ]);
     }
 }
